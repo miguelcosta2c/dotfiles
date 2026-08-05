@@ -89,14 +89,6 @@ alias nv='nvim'
 
 alias py='python'
 
-
-# ┌──────────────────────────────────────┐
-# │ Better tools                         │
-# └──────────────────────────────────────┘
-
-command -v starship >/dev/null && eval "$(starship init bash)"
-
-
 # ┌──────────────────────────────────────┐
 # │ Neofetch replacement                 │
 # └──────────────────────────────────────┘
