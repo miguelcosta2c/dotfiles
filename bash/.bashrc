@@ -81,7 +81,7 @@ alias gp='git push'
 
 
 # ┌──────────────────────────────────────┐
-# │ Development                         │
+# │ Development                          │
 # └──────────────────────────────────────┘
 
 alias v='nvim'
@@ -89,10 +89,9 @@ alias nv='nvim'
 
 alias py='python'
 
+
 # ┌──────────────────────────────────────┐
-# │ Neofetch replacement                 │
+# │ cmatrix                              │
 # └──────────────────────────────────────┘
 
-if command -v fastfetch >/dev/null; then
-    fastfetch
-fi
+alias cmatrix='cmatrix -s -C magenta -u 10'
