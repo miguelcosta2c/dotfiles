@@ -9,11 +9,12 @@
 
     "modules-left": [
         "hyprland/workspaces",
+        "clock",
         "hyprland/window"
     ],
 
     "modules-center": [
-        "clock"
+        "custom/spotify"
     ],
 
     "modules-right": [
@@ -29,20 +30,20 @@
         "format": "{icon}",
         "on-click": "activate",
 
-       "format-icons": { 
-	       "1": "󰲠", 
-	       "2": "󰲢", 
-	       "3": "󰲤", 
-	       "4": "󰲦", 
-	       "5": "󰲨", 
-	       "6": "󰀹", 
-	       "7": "", 
-	       "8": "󰲴", 
-	       "9": "󰲶", 
-	       "10": "󰲸", 
-	       "default": "", 
-	       "active": "", 
-	       "urgent": "" 
+       "format-icons": {
+	       "1": "󰲠",
+	       "2": "󰲢",
+	       "3": "󰲤",
+	       "4": "󰲦",
+	       "5": "󰲨",
+	       "6": "󰀹",
+	       "7": "",
+	       "8": "󰲴",
+	       "9": "󰲶",
+	       "10": "󰲸",
+	       "default": "",
+	       "active": "",
+	       "urgent": ""
        },
 
         "persistent-workspaces": {
@@ -55,6 +56,17 @@
         "format": "{title}",
         "max-length": 40,
         "separate-outputs": true
+    },
+
+    "custom/spotify": {
+        "format": " {}",
+        "return-type": "json",
+        "max-length": 50,
+        "exec": "~/.config/waybar/scripts/waybar-media.sh",
+        "on-click": "~/.config/waybar/scripts/waybar-media.sh toggle",
+        "on-scroll-up": "~/.config/waybar/scripts/waybar-media.sh next",
+        "on-scroll-down": "~/.config/waybar/scripts/waybar-media.sh prev",
+        "escape": true
     },
 
     "clock": {

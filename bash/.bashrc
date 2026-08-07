@@ -5,6 +5,8 @@
 # │ Shell Options                        │
 # └──────────────────────────────────────┘
 
+export TERMINAL=kitty
+
 shopt -s histappend
 shopt -s checkwinsize
 shopt -s autocd
@@ -58,16 +60,11 @@ alias install='sudo pacman -S'
 
 alias remove='sudo pacman -Rns'
 
-
 # ┌──────────────────────────────────────┐
 # │ Hyprland                             │
 # └──────────────────────────────────────┘
 
-alias hyprreload='hyprctl reload'
-alias hyprmon='hyprctl monitors'
-alias hyprws='hyprctl workspaces'
-
-alias waybar-restart='pkill waybar && waybar &'
+alias waybar-restart='pkill waybar && waybar > /dev/null 2>&1 &'
 
 
 # ┌──────────────────────────────────────┐
