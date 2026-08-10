@@ -7,6 +7,7 @@ local menu       = "wofi --show drun"
 local fileManager = "thunar"          -- troque pelo seu gerenciador de arquivos
 local browser     = "brave"         -- troque pelo seu navegador
 local lockCmd     = "hyprlock"        -- requer o pacote hyprlock
+local emojiSelector = "rofimoji"
 
 ---------------------
 ---- KEYBINDINGS ----
@@ -39,12 +40,6 @@ hl.bind(mainMod .. " + SHIFT + left",  hl.dsp.window.move({ direction = "left" }
 hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
 hl.bind(mainMod .. " + SHIFT + up",    hl.dsp.window.move({ direction = "up" }))
 hl.bind(mainMod .. " + SHIFT + down",  hl.dsp.window.move({ direction = "down" }))
-
--- Redimensionar janela ativa (setas + CTRL), repetível
-hl.bind(mainMod .. " + CTRL + left",  hl.dsp.window.resize({ x = -20, y = 0 }), { repeating = true })
-hl.bind(mainMod .. " + CTRL + right", hl.dsp.window.resize({ x = 20, y = 0 }),  { repeating = true })
-hl.bind(mainMod .. " + CTRL + up",    hl.dsp.window.resize({ x = 0, y = -20 }), { repeating = true })
-hl.bind(mainMod .. " + CTRL + down",  hl.dsp.window.resize({ x = 0, y = 20 }),  { repeating = true })
 
 -------------------------
 ---- WORKSPACE RULES ----
@@ -122,6 +117,5 @@ hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = tr
 hl.bind("Print", hl.dsp.exec_cmd('grim -g "$(slurp)" - | wl-copy'))
 hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd("grim - | wl-copy"))
 
--- Screenshots (requer grim + slurp + wl-clipboard)
-hl.bind("Print", hl.dsp.exec_cmd('grim -g "$(slurp)" - | wl-copy'))
-hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd("grim - | wl-copy"))
+-- Emojis
+hl.bind(mainMod .. " + period", hl.dsp.exec_cmd(emojiSelector))
