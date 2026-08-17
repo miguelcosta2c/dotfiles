@@ -18,7 +18,7 @@ hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 -- Toolkit backend
 hl.env("QT_QPA_PLATFORM", "wayland;xcb")
 hl.env("GDK_BACKEND", "wayland,x11,*")
-hl.env("SDL_VIDEO_DRIVER", "wayland")
+hl.env("SDL_VIDEODRIVER", "wayland")
 
 -- XDG Specifications
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")

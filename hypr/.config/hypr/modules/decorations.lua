@@ -7,13 +7,13 @@
 hl.config({
     general = {
         gaps_in          = 8,
-        gaps_out         = 20,
-        border_size      = 2,
+        gaps_out         = 15,
+        border_size      = 1,
         resize_on_border = true,
         allow_tearing    = false,
 
         -- Dracula: borda ativa em roxo
-        ["col.active_border"] = "rgb(BD93F9)",
+        ["col.active_border"] = "rgb(585D7A)",
 
         -- Dracula: borda inativa em cinza/roxo escuro
         ["col.inactive_border"] = "rgb(44475A)",
@@ -40,7 +40,7 @@ hl.config({
             size     = 8,
             passes   = 3,
             vibrancy = 0.1696,
-	    new_optimizations = true
+	        new_optimizations = true,
         },
     },
 

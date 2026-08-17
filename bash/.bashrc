@@ -60,6 +60,9 @@ alias install='sudo pacman -S'
 
 alias remove='sudo pacman -Rns'
 
+alias games="cd /home/miguel/Games"
+alias fnf="/home/miguel/Games/friday-night-funkin/run-fnf.sh"
+
 # ┌──────────────────────────────────────┐
 # │ Hyprland                             │
 # └──────────────────────────────────────┘

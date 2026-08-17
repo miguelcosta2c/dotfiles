@@ -4,6 +4,14 @@
 -- https://wiki.hypr.land/Configuring/Basics/Window-Rules/
 
 hl.window_rule({
+    name = "floating-waypaper",
+    match = { class = "^(waypaper)$" },
+    float = true,
+    size = { 800, 400 },
+    center = true
+})
+
+hl.window_rule({
     name = "vscode-transparent",
     match = { class = "^(code)$" },
     opacity = 0.9,
