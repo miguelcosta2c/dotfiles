@@ -1,22 +1,20 @@
 #!/bin/bash
 
+# Requer: playerctl, jq, notify-send
 # Define os players prioritários
 PLAYERS="spotify,ncspot"
 
 # Função para enviar a notificação da música atual
 send_notification() {
-    # Evita disparar se estiver pausado ao iniciar
     STATUS=$(playerctl --player=$PLAYERS status 2>/dev/null)
     if [ "$STATUS" = "Playing" ]; then
         ARTIST=$(playerctl --player=$PLAYERS metadata artist 2>/dev/null)
         TITLE=$(playerctl --player=$PLAYERS metadata title 2>/dev/null)
-
-        # Envia a notificação (substitui a anterior usando o ID para não acumular)
         notify-send -r 9991 -i spotify "Tocando agora:" "$ARTIST - $TITLE"
     fi
 }
 
-# Se o script receber o argumento "next", "prev" ou "toggle", ele controla o player
+# Se o script receber "next", "prev" ou "toggle", ele controla o player
 case "$1" in
     next)
         playerctl --player=$PLAYERS next
@@ -34,13 +32,26 @@ case "$1" in
         ;;
 esac
 
-# Loop principal para alimentar o Waybar dinamicamente
-playerctl --player=$PLAYERS metadata --format '{"text": "{{status}}: {{artist}} - {{title}}", "class": "{{status}}", "alt": "{{status}}"}' --follow 2>/dev/null | while read -r line; do
+# Loop principal: usa \t como separador (não quebra com aspas/acentos)
+# e monta o JSON com jq, que escapa corretamente qualquer caractere
+# especial no nome do artista/música (aspas, barras, unicode, etc.)
+playerctl --player=$PLAYERS metadata --format $'{{status}}\t{{artist}}\t{{title}}' --follow 2>/dev/null | \
+while IFS=$'\t' read -r status artist title; do
 
-    # Executa a notificação em segundo plano toda vez que o playerctl mudar de faixa
     send_notification &
 
-    # Ajusta o texto para remover as tags brutas e deixar amigável para o Waybar
-    CLEAN_LINE=$(echo "$line" | sed 's/Playing: //g' | sed 's/Paused: /⏸ /g')
-    echo "$CLEAN_LINE"
+    case "$status" in
+        Playing)
+            text=" ${artist} - ${title}"
+            ;;
+        Paused)
+            text="⏸ ${artist} - ${title}"
+            ;;
+        *)
+            text=""
+            ;;
+    esac
+
+    jq -nc --arg text "$text" --arg class "$status" --arg alt "$status" \
+        '{text: $text, class: $class, alt: $alt}'
 done

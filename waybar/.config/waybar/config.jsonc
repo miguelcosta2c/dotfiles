@@ -1,140 +1,119 @@
 {
-    "layer": "top",
-    "position": "top",
-    "height": 34,
-    "margin-top": 6,
-    "margin-left": 10,
-    "margin-right": 10,
-    "spacing": 4,
+  "layer": "top",
+  "position": "top",
+  "height": 30,
+  "margin-top": 6,
+  "margin-left": 10,
+  "margin-right": 10,
+  "spacing": 4,
 
-    "modules-left": [
-        "hyprland/workspaces",
-        "clock",
-        "hyprland/window"
-    ],
+  "modules-left": ["hyprland/workspaces", "clock"],
+  "modules-center": ["custom/spotify"],
+  "modules-right": ["group/hardware", "tray", "custom/power"],
 
-    "modules-center": [
-        "custom/spotify"
-    ],
-
-    "modules-right": [
-        "pulseaudio",
-        "network",
-        "custom/bluetooth",
-        "memory",
-        "battery",
-        "tray"
-    ],
-
-    "hyprland/workspaces": {
-        "format": "{icon}",
-        "on-click": "activate",
-
-       "format-icons": {
-	       "1": "󰲠",
-	       "2": "󰲢",
-	       "3": "󰲤",
-	       "4": "󰲦",
-	       "5": "󰲨",
-	       "6": "󰀹",
-	       "7": "",
-	       "8": "󰲴",
-	       "9": "󰲶",
-	       "10": "󰲸",
-	       "default": "",
-	       "active": "",
-	       "urgent": ""
-       },
-
-        "persistent-workspaces": {
-            "eDP-1": [1, 2, 3, 4, 5],
-    	    "HDMI-A-1": [6, 7, 8, 9, 10]
-        }
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "on-click": "activate",
+    "format-icons": {
+      "1": "󰲠",
+      "2": "󰲢",
+      "3": "󰲤",
+      "4": "󰲦",
+      "5": "󰲨",
+      "6": "󰀹",
+      "7": "",
+      "8": "󰲴",
+      "9": "󰲶",
+      "10": "󰲸",
+      "default": "󰝦",
+      "active": "󰝥",
+      "urgent": "󰀨",
     },
-
-    "hyprland/window": {
-        "format": "{title}",
-        "max-length": 40,
-        "separate-outputs": true
+    "persistent-workspaces": {
+      "eDP-1": [1, 2, 3, 4, 5],
+      "HDMI-A-1": [6, 7, 8, 9, 10],
     },
+  },
 
-    "custom/spotify": {
-        "format": " {}",
-        "return-type": "json",
-        "max-length": 50,
-        "exec": "~/.config/waybar/scripts/waybar-media.sh",
-        "on-click": "~/.config/waybar/scripts/waybar-media.sh toggle",
-        "on-scroll-up": "~/.config/waybar/scripts/waybar-media.sh next",
-        "on-scroll-down": "~/.config/waybar/scripts/waybar-media.sh prev",
-        "escape": true
+  "custom/spotify": {
+    "format": "󰎇 {}",
+    "return-type": "json",
+    "max-length": 40,
+    "exec": "~/.config/waybar/scripts/waybar-media.sh",
+    "on-click": "~/.config/waybar/scripts/waybar-media.sh toggle",
+    "on-scroll-up": "~/.config/waybar/scripts/waybar-media.sh next",
+    "on-scroll-down": "~/.config/waybar/scripts/waybar-media.sh prev",
+    "escape": true,
+  },
+
+  "clock": {
+    "format": "\uf017  {:%H:%M}",
+    "format-alt": "\uf017  {:%A, %d %B %Y}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+  },
+
+  // Agrupa os módulos "de status" em uma única pílula visual,
+  // mantendo tray e power separados (fica mais limpo e organizado)
+  "group/hardware": {
+    "orientation": "horizontal",
+    "modules": ["pulseaudio", "network", "bluetooth", "memory", "battery"],
+  },
+
+  "memory": {
+    "format": "󰍛 {used:0.1f}GB",
+    "tooltip-format": "RAM: {used:0.1f}GB / {total:0.1f}GB ({percentage}%)",
+    "interval": 2,
+  },
+
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15,
     },
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "󰂄 {capacity}%",
+    "format-icons": ["󰂃", "󰁻", "󰁾", "󰂁", "󰁹"],
+  },
 
-    "clock": {
-        "format": "  {:%H:%M}",
-        "format-alt": "  {:%A, %d %B %Y}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+  "network": {
+    "format-wifi": "  {signalStrength}%",
+    "format-ethernet": "󰈀 Conectado",
+    "format-disconnected": "󰈂 Desconectado",
+    "tooltip-format": "{ifname} via {gwaddr}",
+    "on-click": "kitty -e nmtui",
+  },
+
+  // Módulo NATIVO de bluetooth do Waybar (substitui o "custom/bluetooth"
+  // que estava no modules-right sem nunca ter sido definido)
+  "bluetooth": {
+    "format": "󰂯",
+    "format-connected": "󰂱 {device_alias}",
+    "format-disabled": "󰂲",
+    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "on-click": "blueman-manager",
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰝟 Mudo",
+    "format-icons": {
+      "default": ["󰕿", "󰖀", "󰕾"],
     },
+    "on-click": "pavucontrol",
+    "scroll-step": 5,
+  },
 
-    "memory": {
-        "format": "  {}%",
-        "interval": 2
-    },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 8,
+  },
 
-    "battery": {
-        "states": {
-            "warning": 30,
-            "critical": 15
-        },
-
-        "format": "{icon}  {capacity}%",
-
-        "format-charging": "  {capacity}%",
-
-        "format-plugged": "  {capacity}%",
-
-        "format-icons": [
-            "",
-            "",
-            "",
-            "",
-            ""
-        ]
-    },
-
-    "network": {
-        "format-wifi": "  {signalStrength}%",
-
-        "format-ethernet": "󰈀  Conectado",
-
-        "format-disconnected": "󰈂  Desconectado",
-
-        "tooltip-format": "{ifname} via {gwaddr}",
-
-        "on-click": "kitty -e nmtui"
-    },
-
-
-    "pulseaudio": {
-        "format": "{icon}  {volume}%",
-
-        "format-muted": "󰝟  Mudo",
-
-        "format-icons": {
-            "default": [
-                "",
-                "",
-                ""
-            ]
-        },
-
-        "on-click": "pavucontrol",
-
-        "scroll-step": 5
-    },
-
-    "tray": {
-        "icon-size": 18,
-        "spacing": 10
-    }
+  "custom/power": {
+    "format": "󰐥",
+    "tooltip": false,
+    "on-click": "wlogout",
+  },
 }
-
